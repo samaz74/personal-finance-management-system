@@ -1,5 +1,6 @@
 package com.accounting.app.models;
 
+import com.accounting.app.models.enums.TransactionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -30,15 +31,17 @@ public class Transaction {
     @NotNull(message = "هزینه باید مشخص شود")
     private BigDecimal amount;
     private String description;
+    private TransactionType transactionType;
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public Transaction(Category category,Account mainAccount, Account receiverAccount,String description, BigDecimal amount){
+    public Transaction(Category category,Account mainAccount, Account receiverAccount,String description, BigDecimal amount, TransactionType transactionType){
         this.category =category;
         this.mainAccount=mainAccount;
         this.receiverAccount = receiverAccount;
         this.description= description;
         this.amount=amount;
+        this.transactionType = transactionType;
     }
 
 
