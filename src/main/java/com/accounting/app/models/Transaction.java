@@ -1,6 +1,7 @@
 package com.accounting.app.models;
 
 import com.accounting.app.models.enums.TransactionType;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -27,21 +28,26 @@ public class Transaction {
     private Account mainAccount;
     @ManyToOne
     @JoinColumn(name = "RECEIVER_ACCOUNT")
+    @Nullable
     private Account receiverAccount;
     @NotNull(message = "هزینه باید مشخص شود")
     private BigDecimal amount;
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "USER")
+    private User user;
     private TransactionType transactionType;
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public Transaction(Category category,Account mainAccount, Account receiverAccount,String description, BigDecimal amount, TransactionType transactionType){
+    public Transaction(Category category,Account mainAccount, Account receiverAccount,String description, BigDecimal amount, TransactionType transactionType, User user) {
         this.category =category;
         this.mainAccount=mainAccount;
         this.receiverAccount = receiverAccount;
         this.description= description;
         this.amount=amount;
         this.transactionType = transactionType;
+        this.user=user;
     }
 
 
