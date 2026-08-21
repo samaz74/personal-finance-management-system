@@ -20,7 +20,7 @@ public class AccountMapper {
         Account account = new Account();
         account.setAccountName(accountRequest.getAccountName());
         account.setAccountNumber(accountRequest.getAccountNumber());
-        account.setAccountBank(bankService.getBankById(accountRequest.getAccountBankId()));
+        account.setAccountBank(bankService.getBankByIdentity(accountRequest.getAccountBankId()));
         account.setAccountBalance(accountRequest.getAccountBalance());
         account.setCreatorUser(user);
         account.setTypeOfAccount(accountRequest.getTypeOfAccount());

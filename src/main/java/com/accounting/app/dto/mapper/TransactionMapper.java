@@ -19,10 +19,10 @@ public class TransactionMapper {
 
     public Transaction toEntity(TransactionRequest transactionRequest, User user)  {
         return new Transaction(
-                categoryService.getCategoryById(transactionRequest.getCategoryId()),
-                accountService.getAccountById(transactionRequest.getMainAccountId()),
+                categoryService.getCategoryByIdEntity(transactionRequest.getCategoryId()),
+                accountService.getAccountByIdEntity(transactionRequest.getMainAccountId()),
                 transactionRequest.getReceiverAccountId() != null ?
-                        accountService.getAccountById(transactionRequest.getReceiverAccountId()) : null,
+                        accountService.getAccountByIdEntity(transactionRequest.getReceiverAccountId()) : null,
                 transactionRequest.getDescription(),
                 transactionRequest.getAmount(),
                 transactionRequest.getTransactionType(),
