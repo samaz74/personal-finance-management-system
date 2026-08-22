@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
-    private final UserService userService;
+    private final com.accounting.app.Service.UserService userService;
 
-    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, UserService userService) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, com.accounting.app.Service.UserService userService) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
         this.userService = userService;
@@ -36,11 +36,12 @@ public class CategoryService {
     public List<CategoryRespose> getAllCategoryOfUser(long userId) {
         return categoryRepository.findCategoriesByUser(userService.getUserByIdEntity(userId)).stream().map(categoryMapper::toRespose).collect(Collectors.toList());
     }
-    public CategoryRespose updateCategory(CategoryRequest categoryRequest, Long userId) {
+    public CategoryRespose updateCategory(CategoryRequest categoryRequest, Long userId, Long categoryId) {
         Category category= categoryMapper.toEntity(categoryRequest,userService.getUserByIdEntity(userId));
+        category.setId(categoryId);
         return categoryMapper.toRespose(categoryRepository.save(category));
     }
-    public void deleteCategory(CategoryRequest categoryRequest, Long userId) {
-        categoryRepository.delete(categoryMapper.toEntity(categoryRequest,userService.getUserByIdEntity(userId)));
+    public void deleteCategory(Long categoryId) {
+        categoryRepository.deleteById(categoryId);
     }
 }

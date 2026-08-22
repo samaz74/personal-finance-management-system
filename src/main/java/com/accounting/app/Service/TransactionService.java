@@ -8,8 +8,10 @@ import com.accounting.app.exeption.InvalidOperationExeption;
 import com.accounting.app.exeption.ResourceNotFoundExeption;
 import com.accounting.app.models.Account;
 import com.accounting.app.models.Transaction;
+import com.accounting.app.models.enums.TransactionType;
 import com.accounting.app.models.enums.TypeOfCategory;
 import com.accounting.app.repasitory.TransactionRepository;
+import com.accounting.app.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +25,10 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
     private final UserService userService;
-    private final AccountService accountService;
-    private final CategoryService categoryService;
+    private final com.accounting.app.Service.AccountService accountService;
+    private final com.accounting.app.Service.CategoryService categoryService;
 
-    public TransactionService(TransactionRepository transactionRepository, TransactionMapper transactionMapper, UserService userService, AccountService accountService, AccountMapper accountMapper, CategoryService categoryService) {
+    public TransactionService(TransactionRepository transactionRepository, TransactionMapper transactionMapper, UserService userService, com.accounting.app.Service.AccountService accountService, AccountMapper accountMapper, com.accounting.app.Service.CategoryService categoryService) {
         this.transactionRepository = transactionRepository;
         this.transactionMapper = transactionMapper;
         this.userService = userService;
@@ -42,25 +44,33 @@ public class TransactionService {
 
     @Transactional
     public TransactionResponse createTransaction(TransactionRequest transactionRequest, Long userId) {
-        Transaction transaction = transactionMapper.toEntity(transactionRequest,userService.getUserByIdEntity(userId));
+        Transaction transaction = transactionMapper.toEntity(transactionRequest, userService.getUserByIdEntity(userId));
         Account mainAccount = transaction.getMainAccount();
-        if(transaction.getCategory().getTypeOfCategory() == TypeOfCategory.INCOME) {
-           BigDecimal balance = accountService.getAccountBalance(mainAccount.getId()).add(transaction.getAmount());
-           accountService.updateBalance(mainAccount.getId(),balance);
-           return transactionMapper.toResponse(transactionRepository.save(transaction));
-        }else if(transaction.getCategory().getTypeOfCategory() == TypeOfCategory.COST){
+        if (transaction.getTransactionType().equals(TransactionType.INCOME)) {
+            BigDecimal balance = accountService.getAccountBalance(mainAccount.getId()).add(transaction.getAmount());
+            accountService.updateBalance(mainAccount.getId(), balance);
+            return transactionMapper.toResponse(transactionRepository.save(transaction));
+        } else if (transaction.getTransactionType().equals(TransactionType.COST)) {
             BigDecimal balance = accountService.getAccountBalance(mainAccount.getId());
-            if(balance.compareTo(transaction.getAmount()) > 0){
-                accountService.updateBalance(mainAccount.getId(),balance.subtract(transaction.getAmount()));
+            if (balance.compareTo(transaction.getAmount()) > 0) {
+                accountService.updateBalance(mainAccount.getId(), balance.subtract(transaction.getAmount()));
                 Account receiverAccount = transaction.getReceiverAccount();
-                if(receiverAccount != null){
-                    BigDecimal balanceReceiverAccount = accountService.getAccountBalance(receiverAccount.getId()).add(transaction.getAmount());
-                    accountService.updateBalance(receiverAccount.getId(),balanceReceiverAccount);
-                    return transactionMapper.toResponse(transactionRepository.save(transaction));
+                if (receiverAccount != null) {
+                    BigDecimal receiverBalance = accountService.getAccountBalance(receiverAccount.getId());
+                    accountService.updateBalance(receiverAccount.getId(), receiverBalance.add(transaction.getAmount()));
                 }
                 return transactionMapper.toResponse(transactionRepository.save(transaction));
+            } else throw new InvalidOperationExeption("مبلغ تراکنش بیشتر از موجودی حساب میباشد");
+        } else if (transaction.getTransactionType().equals(TransactionType.TRANSFER)) {
+            BigDecimal balance = accountService.getAccountBalance(mainAccount.getId());
+            if (balance.compareTo(transaction.getAmount()) > 0) {
+                accountService.updateBalance(mainAccount.getId(), balance.subtract(transaction.getAmount()));
+                Account receiverAccount = transaction.getReceiverAccount();
+                BigDecimal receiverBalance = accountService.getAccountBalance(receiverAccount.getId());
+                accountService.updateBalance(receiverAccount.getId(), receiverBalance.add(transaction.getAmount()));
+                return transactionMapper.toResponse(transactionRepository.save(transaction));
             }else throw new InvalidOperationExeption("مبلغ تراکنش بیشتر از موجودی حساب میباشد");
-        }else throw new InvalidOperationExeption("تراکنش نامعتبر است.");
+        } else throw new InvalidOperationExeption("تراکنش نامعتبر است.");
     }
 
     public List<TransactionResponse> getTransactionByAccountId(Long accountId, Long userId) {

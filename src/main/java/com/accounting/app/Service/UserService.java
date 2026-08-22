@@ -1,4 +1,4 @@
-package com.accounting.app.Service;
+package com.accounting.app.service;
 
 import com.accounting.app.dto.UserRequest;
 import com.accounting.app.dto.UserResponse;
@@ -33,7 +33,7 @@ public class UserService {
         return userRepository.findUsersByEmailContaining(email).stream().map(userMapper::toUserResponse).collect(Collectors.toList());
     }
     public List<UserResponse> getUserByLastName(String lastName) {
-        return userRepository.getUserByLastNameContaining(lastName);
+        return userRepository.findUsersByLastNameContaining(lastName).stream().map(userMapper::toUserResponse).collect(Collectors.toList());
     }
 
     public UserResponse addUser(UserRequest userRequest) {
@@ -41,9 +41,11 @@ public class UserService {
         return userMapper.toUserResponse( userRepository.save(user));
     }
     public UserResponse updateUser(Long id,UserRequest userRequest) {
-        User user = userMapper.toEntity(userRequest);
-        user.setId(id);
-        return userMapper.toUserResponse( userRepository.save(user));
+        if (userRepository.existsById(id)){
+            User user = userMapper.toEntity(userRequest);
+            user.setId(id);
+            return userMapper.toUserResponse( userRepository.save(user));
+        }else throw new ResourceNotFoundExeption("کاربر یافت نشد.");
     }
     public void deleteUser(Long id) {
         userRepository.deleteById(id);

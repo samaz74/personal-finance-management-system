@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
-    private final UserService userService;
-    private final BankService bankService;
+    private final com.accounting.app.Service.UserService userService;
+    private final com.accounting.app.Service.BankService bankService;
 
 
-    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper, UserService userService, BankService bankService) {
+    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper, com.accounting.app.Service.UserService userService, com.accounting.app.Service.BankService bankService) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
         this.userService = userService;
@@ -34,7 +34,7 @@ public class AccountService {
         return accountRepository.findById(accountId).map(accountMapper::toResponse).orElseThrow(() -> new ResourceNotFoundExeption("حساب یافت نشد."));
     }
     public List<AccountResponse> getAllAccounts(Long userId) {
-        return accountRepository.getAccountsByCreatorUser_Id(userId).stream().collect(Collectors.toList());
+        return accountRepository.getAccountsByCreatorUser_Id(userId).stream().map(accountMapper::toResponse).collect(Collectors.toList());
     }
     public List<AccountResponse> getAllAccounts() {
         return accountRepository.findAll().stream().map(accountMapper::toResponse).collect(Collectors.toList());
@@ -63,6 +63,7 @@ public class AccountService {
     public void updateBalance(Long accountId, BigDecimal balabce) {
         Account account  = accountRepository.findById(accountId).orElseThrow(()->new ResourceNotFoundExeption("حساب یافت نشد."));
         account.setAccountBalance(balabce);
+        accountRepository.save(account);
     }
     public void deleteAccount(Long accountId) {
         accountRepository.deleteById(accountId);

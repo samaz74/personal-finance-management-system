@@ -37,10 +37,13 @@ public class BankService {
         return bankRepository.findBanksByNameContaining(name).stream().map(bankMapper::toResponse).collect(Collectors.toList());
     }
     public BankResponse updateBank(Long id, BankRequest bankRequest) {
-        Bank bank = bankMapper.toEntity(bankRequest);
-        bank.setId(id);
-        bankRepository.save(bank);
-        return bankMapper.toResponse(bank);
+        if (bankRepository.existsById(id)){
+            Bank bank = bankMapper.toEntity(bankRequest);
+            bank.setId(id);
+            bankRepository.save(bank);
+            return bankMapper.toResponse(bank);
+        }else throw new ResourceNotFoundExeption("بانک یافت نشد.");
+
     }
     public void toggleBank(Long id) {
         Bank bank = bankRepository.findById(id).orElseThrow(()->new ResourceNotFoundExeption("بانک یافت نشد."));

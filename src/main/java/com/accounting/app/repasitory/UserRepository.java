@@ -18,5 +18,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     List<User> findUsersByEmailContaining(String email);
 
-    List<UserResponse> getUserByLastNameContaining(@NotBlank(message = "نام خانوادگی نمی توند خالی باشد.") String lastName);
+    List<User> getUserByLastNameContaining(String lastName);
+
+    boolean existsByEmail(String email);
 }

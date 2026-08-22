@@ -1,4 +1,4 @@
-package com.accounting.app.Service;
+package com.accounting.app.service;
 
 import com.accounting.app.dto.BudgetRequest;
 import com.accounting.app.dto.BudgetResponse;
@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final BudgetMapper budgetMapper;
-    private final UserService userService;
-    private final TransactionService transactionService;
+    private final com.accounting.app.Service.UserService userService;
+    private final com.accounting.app.Service.TransactionService transactionService;
 
-    public BudgetService(BudgetRepository budgetRepository, BudgetMapper budgetMapper, UserService userService, TransactionService transactionService) {
+    public BudgetService(BudgetRepository budgetRepository, BudgetMapper budgetMapper, com.accounting.app.Service.UserService userService, com.accounting.app.Service.TransactionService transactionService) {
         this.budgetRepository = budgetRepository;
         this.budgetMapper = budgetMapper;
         this.userService = userService;
@@ -27,19 +27,19 @@ public class BudgetService {
     public Budget getbudgetByIdEntity(long id) {
         return budgetRepository.findById(id).orElseThrow(()-> new ResourceNotFoundExeption("بودجه یافت نشد."));
     }
-    public BudgetResponse getbudgetById(long id) {
+    public BudgetResponse getBudgetById(long id) {
         return budgetMapper.toResponse(getbudgetByIdEntity(id));
     }
-    public BudgetResponse addbudget(BudgetRequest budgetRequest, Long userId) {
+    public BudgetResponse addBudget(BudgetRequest budgetRequest, Long userId) {
         return budgetMapper.toResponse(budgetRepository.save(budgetMapper.toEntity(budgetRequest,userService.getUserByIdEntity(userId))));
     }
-    public BudgetResponse updatebudget(BudgetRequest budgetRequest, Long userId) {
+    public BudgetResponse updateBudget(BudgetRequest budgetRequest, Long userId, Long budgetId) {
         Budget budget = budgetMapper.toEntity(budgetRequest,userService.getUserByIdEntity(userId));
-        budget.setId(budget.getId());
+        budget.setId(budgetId);
         return budgetMapper.toResponse(budgetRepository.save(budget));
     }
     public BudgetResponse getUserBudgetById(long userId) {
-        return budgetMapper.toResponse(budgetRepository.findBudgetByUser_IdAndMonthAndYear(userId, LocalDateTime.now().getMonth().getValue(), LocalDateTime.now().getYear()));
+        return budgetMapper.toResponse(budgetRepository.findBudgetByUser_IdAndMonthAndYear(userId, LocalDateTime.now().getMonth().getValue(), LocalDateTime.now().getYear()).orElseThrow(()-> new ResourceNotFoundExeption("بودجه یافت نشد.")));
     }
     public Budget getUserBudgetByMonthAndYear(Long userId, Integer month, Integer year) {
         return budgetRepository.findBudgetByUserAndMonthAndYear(userService.getUserByIdEntity(userId),month,year).orElseThrow(()-> new ResourceNotFoundExeption("بودجه یافت نشد."));

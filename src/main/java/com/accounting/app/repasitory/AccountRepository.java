@@ -10,5 +10,5 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account,Long> {
     List<Account> findAccountsByCreatorUser(User creatorUser);
 
-    List<AccountResponse> getAccountsByCreatorUser_Id(Long creatorUserId);
+    List<Account> getAccountsByCreatorUser_Id(Long creatorUserId);
 }
