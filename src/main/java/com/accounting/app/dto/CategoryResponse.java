@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CategoryRespose {
+public class CategoryResponse {
     private Long id;
     private String name;
     private String code;

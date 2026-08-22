@@ -35,6 +35,10 @@ public class UserService {
     public List<UserResponse> getUserByLastName(String lastName) {
         return userRepository.findUsersByLastNameContaining(lastName).stream().map(userMapper::toUserResponse).collect(Collectors.toList());
     }
+    public User getUserByEmailEntity(String email) {
+        return userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundExeption("کاربر یافت نشد."));
+    }
 
     public UserResponse addUser(UserRequest userRequest) {
         User user = userMapper.toEntity(userRequest);

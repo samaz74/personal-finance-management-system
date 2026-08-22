@@ -1,7 +1,7 @@
 package com.accounting.app.dto.mapper;
 
 import com.accounting.app.dto.CategoryRequest;
-import com.accounting.app.dto.CategoryRespose;
+import com.accounting.app.dto.CategoryResponse;
 import com.accounting.app.models.Category;
 import com.accounting.app.models.User;
 import org.springframework.stereotype.Component;
@@ -16,8 +16,8 @@ public class CategoryMapper {
                 user
         );
     }
-    public CategoryRespose toRespose(Category category) {
-        return new CategoryRespose(
+    public CategoryResponse toRespose(Category category) {
+        return new CategoryResponse(
                 category.getId(),
                 category.getName(),
                 category.getCode(),
