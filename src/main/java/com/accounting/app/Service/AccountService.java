@@ -1,4 +1,4 @@
-package com.accounting.app.Service;
+package com.accounting.app.service;
 
 import com.accounting.app.dto.AccountRequest;
 import com.accounting.app.dto.AccountResponse;
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
-    private final com.accounting.app.Service.UserService userService;
-    private final com.accounting.app.Service.BankService bankService;
+    private final UserService userService;
+    private final BankService bankService;
 
 
-    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper, com.accounting.app.Service.UserService userService, com.accounting.app.Service.BankService bankService) {
+    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper, UserService userService, BankService bankService) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
         this.userService = userService;
@@ -33,7 +33,7 @@ public class AccountService {
     public AccountResponse getAccountById(Long accountId) {
         return accountRepository.findById(accountId).map(accountMapper::toResponse).orElseThrow(() -> new ResourceNotFoundExeption("حساب یافت نشد."));
     }
-    public List<AccountResponse> getAllAccounts(Long userId) {
+    public List<AccountResponse> getAccountsByUserId(Long userId) {
         return accountRepository.getAccountsByCreatorUser_Id(userId).stream().map(accountMapper::toResponse).collect(Collectors.toList());
     }
     public List<AccountResponse> getAllAccounts() {

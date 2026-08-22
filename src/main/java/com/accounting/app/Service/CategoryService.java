@@ -1,4 +1,4 @@
-package com.accounting.app.Service;
+package com.accounting.app.service;
 
 import com.accounting.app.dto.CategoryRequest;
 import com.accounting.app.dto.CategoryRespose;
@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
-    private final com.accounting.app.Service.UserService userService;
+    private final UserService userService;
 
-    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, com.accounting.app.Service.UserService userService) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, UserService userService) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
         this.userService = userService;

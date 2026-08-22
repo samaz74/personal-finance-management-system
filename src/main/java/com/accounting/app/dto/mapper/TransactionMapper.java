@@ -1,11 +1,12 @@
 package com.accounting.app.dto.mapper;
 
-import com.accounting.app.Service.AccountService;
-import com.accounting.app.Service.CategoryService;
+
 import com.accounting.app.dto.TransactionRequest;
 import com.accounting.app.dto.TransactionResponse;
 import com.accounting.app.models.Transaction;
 import com.accounting.app.models.User;
+import com.accounting.app.service.AccountService;
+import com.accounting.app.service.CategoryService;
 import org.springframework.stereotype.Component;
 
 @Component

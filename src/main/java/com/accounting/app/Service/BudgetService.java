@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final BudgetMapper budgetMapper;
-    private final com.accounting.app.Service.UserService userService;
-    private final com.accounting.app.Service.TransactionService transactionService;
+    private final UserService userService;
+    private final TransactionService transactionService;
 
-    public BudgetService(BudgetRepository budgetRepository, BudgetMapper budgetMapper, com.accounting.app.Service.UserService userService, com.accounting.app.Service.TransactionService transactionService) {
+    public BudgetService(BudgetRepository budgetRepository, BudgetMapper budgetMapper, UserService userService, TransactionService transactionService) {
         this.budgetRepository = budgetRepository;
         this.budgetMapper = budgetMapper;
         this.userService = userService;

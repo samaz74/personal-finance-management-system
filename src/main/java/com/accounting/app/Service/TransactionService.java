@@ -1,4 +1,4 @@
-package com.accounting.app.Service;
+package com.accounting.app.service;
 
 import com.accounting.app.dto.TransactionRequest;
 import com.accounting.app.dto.TransactionResponse;
@@ -25,10 +25,10 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
     private final UserService userService;
-    private final com.accounting.app.Service.AccountService accountService;
-    private final com.accounting.app.Service.CategoryService categoryService;
+    private final AccountService accountService;
+    private final CategoryService categoryService;
 
-    public TransactionService(TransactionRepository transactionRepository, TransactionMapper transactionMapper, UserService userService, com.accounting.app.Service.AccountService accountService, AccountMapper accountMapper, com.accounting.app.Service.CategoryService categoryService) {
+    public TransactionService(TransactionRepository transactionRepository, TransactionMapper transactionMapper, UserService userService, AccountService accountService, AccountMapper accountMapper, CategoryService categoryService) {
         this.transactionRepository = transactionRepository;
         this.transactionMapper = transactionMapper;
         this.userService = userService;

@@ -1,10 +1,11 @@
 package com.accounting.app.dto.mapper;
 
-import com.accounting.app.Service.CategoryService;
+
 import com.accounting.app.dto.BudgetRequest;
 import com.accounting.app.dto.BudgetResponse;
 import com.accounting.app.models.Budget;
 import com.accounting.app.models.User;
+import com.accounting.app.service.CategoryService;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +16,7 @@ public class BudgetMapper {
     }
     public Budget toEntity(BudgetRequest budgetRequest, User user) {
         return new Budget(
-                categoryService.getCategoryById(budgetRequest.getCategoryId()),
+                categoryService.getCategoryByIdEntity(budgetRequest.getCategoryId()),
                 budgetRequest.getMonthBudget(),
                 budgetRequest.getYear(),
                 budgetRequest.getMonth(),

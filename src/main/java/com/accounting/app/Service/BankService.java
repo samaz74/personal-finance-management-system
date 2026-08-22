@@ -1,4 +1,4 @@
-package com.accounting.app.Service;
+package com.accounting.app.service;
 
 import com.accounting.app.dto.BankRequest;
 import com.accounting.app.dto.BankResponse;
