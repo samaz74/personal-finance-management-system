@@ -3,6 +3,7 @@ package com.accounting.app.controller;
 import com.accounting.app.dto.TransactionRequest;
 import com.accounting.app.dto.TransactionResponse;
 import com.accounting.app.service.ExcelService;
+import com.accounting.app.service.PDFService;
 import com.accounting.app.service.TransactionService;
 import com.accounting.app.service.UserService;
 import org.springframework.http.HttpHeaders;
@@ -19,11 +20,13 @@ public class TransactionController {
     private final TransactionService transactionService;
     private final UserService userService;
     private final ExcelService excelService;
+    private final PDFService pDFService;
 
-    public TransactionController(TransactionService transactionService, UserService userService, ExcelService excelService) {
+    public TransactionController(TransactionService transactionService, UserService userService, ExcelService excelService, PDFService pDFService) {
         this.transactionService = transactionService;
         this.userService = userService;
         this.excelService = excelService;
+        this.pDFService = pDFService;
     }
 
     @GetMapping("/{id}")
@@ -43,8 +46,8 @@ public class TransactionController {
         return transactionService.createTransaction(transactionRequest,userService.getUserByEmailEntity(principal.getName()).getId());
     }
 
-    @GetMapping("/report/transactions/{accountId}")
-    public ResponseEntity<byte[]> downloadTransactionReport(
+    @GetMapping("/report/transactions/excle/{accountId}")
+    public ResponseEntity<byte[]> downloadTransactionReportExcel(
             @PathVariable Long accountId,
             Principal principal) {
 
@@ -54,6 +57,17 @@ public class TransactionController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=transactions.xlsx")
                 .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                 .body(excelFile);
+    }
+
+    @GetMapping("/report/transactions/pdf/{accountId}")
+    public ResponseEntity<byte[]> downloadTransactionReport(@PathVariable Long accountId, Principal principal) throws Exception {
+
+        byte[] pdfFile = pDFService.transactionPdfGenerator(principal, accountId);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=transactions.pdf")
+                .contentType(MediaType.APPLICATION_PDF).body(pdfFile);
+
     }
 
 
