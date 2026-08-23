@@ -13,6 +13,7 @@ Features include JWT authentication, multi-account support, transaction manageme
 - iText (PDF)
 - Lombok
 - Maven
+- Docker
 
 ## Project Structure
 - **Model** — User, Account, Bank, Category, Transaction, Budget, InvalidatedToken
@@ -131,8 +132,7 @@ jwt.expiration=1200000
 mvn spring-boot:run
 ```
 
-## Roles
-| Role | Access |
-|------|--------|
-| ADMIN | Full access |
-| USER | Own data only |
+### Docker
+```bash
+docker-compose up --build
+```
