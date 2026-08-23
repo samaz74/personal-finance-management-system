@@ -29,7 +29,7 @@ public class CategoryService {
     public Category getCategoryByIdEntity(long id) {
         return categoryRepository.findById(id).orElseThrow(()->new ResourceNotFoundExeption("دسته بندی یافت نشد."));
     }
-    public CategoryResponse getcategoryById(Long id) {
+    public CategoryResponse getCategoryById(Long id) {
         return categoryRepository.findById(id).map(categoryMapper::toRespose).orElseThrow(()->new ResourceNotFoundExeption("دسته بندی یافت نشد."));
 
     }

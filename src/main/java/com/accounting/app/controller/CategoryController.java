@@ -29,7 +29,7 @@ public class CategoryController {
     }
     @GetMapping("/{id}")
     public CategoryResponse getUserById(@PathVariable Long id){
-        return categoryService.getcategoryById(id);
+        return categoryService.getCategoryById(id);
     }
     @PostMapping("/")
     public CategoryResponse createCategory(@RequestBody CategoryRequest categoryRequest, Principal principal){
