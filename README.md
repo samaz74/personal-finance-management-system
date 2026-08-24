@@ -110,7 +110,7 @@ Authorization: Bearer <token>
 ### Setup
 1. Clone the repository
 ```bash
-git clone https://github.com/samaz74/financial-management.git
+git clone https://github.com/samaz74/personal-finance-management-system.git
 ```
 
 2. Create database
