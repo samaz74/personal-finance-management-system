@@ -72,6 +72,9 @@ public class AccountService {
         accountRepository.deleteById(accountId);
     }
 
+    public Boolean isAccountOwner(Long userId , Long accountId) throws ResourceNotFoundExeption{
+        return accountRepository.findById(accountId).orElseThrow(() -> new ResourceNotFoundExeption("حساب یافت نشد")).getCreatorUser().getId().equals(userId) ? true : false;
+    }
 
 
 }
