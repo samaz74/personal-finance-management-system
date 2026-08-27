@@ -27,6 +27,7 @@ public class User {
     private String email;
     @NotBlank(message = "پسورد الزامی هست.")
     private String password;
+    @Enumerated(EnumType.STRING)
     private Roles role;
     @CreationTimestamp
     private LocalDateTime createdDate;

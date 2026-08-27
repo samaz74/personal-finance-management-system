@@ -20,6 +20,7 @@ public class Category {
     private String name;
     @Column(unique = true)
     private String code;
+    @Enumerated(EnumType.STRING)
     private TypeOfCategory typeOfCategory;
     @ManyToOne
     @JoinColumn(name = "CREATOR_USER")

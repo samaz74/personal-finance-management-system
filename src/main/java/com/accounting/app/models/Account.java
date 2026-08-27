@@ -27,7 +27,9 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_BANK")
     private Bank accountBank;
+    @Enumerated(EnumType.STRING)
     private TypeOfAccount typeOfAccount;
+    @Enumerated(EnumType.STRING)
     private Currency accountCurrency;
     @ManyToOne
     @JoinColumn(name = "CREATOR_USER")
