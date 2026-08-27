@@ -10,8 +10,7 @@ import com.accounting.app.models.Account;
 import com.accounting.app.models.Transaction;
 import com.accounting.app.models.enums.TransactionType;
 import com.accounting.app.models.enums.TypeOfCategory;
-import com.accounting.app.repasitory.TransactionRepository;
-import com.accounting.app.service.UserService;
+import com.accounting.app.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -6,8 +6,7 @@ import com.accounting.app.dto.mapper.AccountMapper;
 import com.accounting.app.exeption.ResourceNotFoundExeption;
 import com.accounting.app.models.Account;
 import com.accounting.app.models.User;
-import com.accounting.app.repasitory.AccountRepository;
-import com.accounting.app.repasitory.UserRepository;
+import com.accounting.app.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

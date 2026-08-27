@@ -1,7 +1,7 @@
 package com.accounting.app.security;
 
 import com.accounting.app.models.User;
-import com.accounting.app.repasitory.UserRepository;
+import com.accounting.app.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

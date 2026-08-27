@@ -5,7 +5,7 @@ import com.accounting.app.dto.BudgetResponse;
 import com.accounting.app.dto.mapper.BudgetMapper;
 import com.accounting.app.exeption.ResourceNotFoundExeption;
 import com.accounting.app.models.Budget;
-import com.accounting.app.repasitory.BudgetRepository;
+import com.accounting.app.repository.BudgetRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

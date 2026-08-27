@@ -5,7 +5,7 @@ import com.accounting.app.dto.UserResponse;
 import com.accounting.app.dto.mapper.UserMapper;
 import com.accounting.app.exeption.ResourceNotFoundExeption;
 import com.accounting.app.models.User;
-import com.accounting.app.repasitory.UserRepository;
+import com.accounting.app.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

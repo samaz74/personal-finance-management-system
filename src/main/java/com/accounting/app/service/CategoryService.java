@@ -5,9 +5,7 @@ import com.accounting.app.dto.CategoryResponse;
 import com.accounting.app.dto.mapper.CategoryMapper;
 import com.accounting.app.exeption.ResourceNotFoundExeption;
 import com.accounting.app.models.Category;
-import com.accounting.app.models.User;
-import com.accounting.app.repasitory.CategoryRepository;
-import com.accounting.app.repasitory.UserRepository;
+import com.accounting.app.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

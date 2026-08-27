@@ -1,6 +1,6 @@
 package com.accounting.app.security;
 
-import com.accounting.app.repasitory.InvalidatedTokenRepository;
+import com.accounting.app.repository.InvalidatedTokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

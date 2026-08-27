@@ -1,8 +1,6 @@
-package com.accounting.app.repasitory;
+package com.accounting.app.repository;
 
-import com.accounting.app.dto.UserResponse;
 import com.accounting.app.models.User;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

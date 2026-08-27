@@ -1,4 +1,4 @@
-package com.accounting.app.repasitory;
+package com.accounting.app.repository;
 
 import com.accounting.app.models.InvalidatedToken;
 import org.springframework.data.jpa.repository.JpaRepository;

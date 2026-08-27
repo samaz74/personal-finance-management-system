@@ -5,7 +5,7 @@ import com.accounting.app.dto.BankResponse;
 import com.accounting.app.dto.mapper.BankMapper;
 import com.accounting.app.exeption.ResourceNotFoundExeption;
 import com.accounting.app.models.Bank;
-import com.accounting.app.repasitory.BankRepository;
+import com.accounting.app.repository.BankRepository;
 import com.accounting.app.service.BankService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
